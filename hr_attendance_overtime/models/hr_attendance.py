@@ -37,12 +37,4 @@ class HrAttendance(models.Model):
         return super().needs_autoclose()
 
     def autoclose_attendance(self, reason):
-        self.ensure_one()
-        worktime = self._get_worktimes()
-        if worktime:
-            attendances = self.employee_id._attendance_action_change()
-            res = attendances.write({"attendance_reason_ids": [(4, reason.id)]})
-        else:
-            res = super().autoclose_attendance(reason)
-            self.is_overtime = True
-        return res
+        return super().autoclose_attendance(reason)
